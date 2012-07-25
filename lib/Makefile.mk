@@ -16,6 +16,7 @@ SubDirs += i386 ppc x86_64 arm
 # Add other submodules.
 SubDirs += asan
 SubDirs += interception
+SubDirs += ioc
 SubDirs += profile
 SubDirs += sanitizer_common
 SubDirs += tsan

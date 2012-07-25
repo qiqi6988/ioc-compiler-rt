@@ -53,6 +53,12 @@ Configs += tsan-x86_64
 Arch.tsan-x86_64 := x86_64
 endif
 
+ifeq ($(call contains,i386 x86_64,$(CompilerTargetArch)),true)
+Configs += ioc-i386 ioc-x86_64
+Arch.ioc-i386 := i386
+Arch.ioc-x86_64 := x86_64
+endif
+
 endif
 
 ###
@@ -63,6 +69,8 @@ CFLAGS.full-i386 := $(CFLAGS) -m32
 CFLAGS.full-x86_64 := $(CFLAGS) -m64
 CFLAGS.profile-i386 := $(CFLAGS) -m32
 CFLAGS.profile-x86_64 := $(CFLAGS) -m64
+CFLAGS.ioc-i386 := $(CFLAGS) -m32
+CFLAGS.ioc-x86_64 := $(CFLAGS) -m64
 CFLAGS.asan-i386 := $(CFLAGS) -m32 -fPIE -fno-builtin
 CFLAGS.asan-x86_64 := $(CFLAGS) -m64 -fPIE -fno-builtin
 CFLAGS.tsan-x86_64 := $(CFLAGS) -m64 -fPIE -fno-builtin
@@ -74,11 +82,16 @@ CFLAGS.full-i386 += --sysroot=$(ProjSrcRoot)/SDKs/linux
 CFLAGS.full-x86_64 += --sysroot=$(ProjSrcRoot)/SDKs/linux
 CFLAGS.profile-i386 += --sysroot=$(ProjSrcRoot)/SDKs/linux
 CFLAGS.profile-x86_64 += --sysroot=$(ProjSrcRoot)/SDKs/linux
+CFLAGS.ioc-i386 += --sysroot=$(ProjSrcRoot)/SDKs/linux
+CFLAGS.ioc-x86_64 += --sysroot=$(ProjSrcRoot)/SDKs/linux
 
 FUNCTIONS.full-i386 := $(CommonFunctions) $(ArchFunctions.i386)
 FUNCTIONS.full-x86_64 := $(CommonFunctions) $(ArchFunctions.x86_64)
 FUNCTIONS.profile-i386 := GCDAProfiling
 FUNCTIONS.profile-x86_64 := GCDAProfiling
+FUNCTIONS.ioc-i386 := ioc_report
+FUNCTIONS.ioc-x86_64 := ioc_report
+
 FUNCTIONS.asan-i386 := $(AsanFunctions) $(InterceptionFunctions) \
                                         $(SanitizerCommonFunctions)
 FUNCTIONS.asan-x86_64 := $(AsanFunctions) $(InterceptionFunctions) \
