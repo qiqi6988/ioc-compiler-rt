@@ -107,6 +107,22 @@ void __ioc_report_shl_strict(uint32_t line, uint32_t column,
                      "left shift into or beyond sign bit");
 }
 
+void __ioc_report_conversion(uint32_t line, uint32_t column,
+                             const char *filename,
+                             const char *srcty, const char *canonsrcty,
+                             const char *dstty, const char *canondstty,
+                             uint64_t src, uint8_t S) {
+  char srcstr[100];
+  if (S)
+    sprintf(srcstr, "%lld", (signed long long)src);
+  else
+    sprintf(srcstr, "%llu", (unsigned long long)src);
+  fprintf(stderr, "%s:%d:%d: runtime error: value lost in conversion of '%s'"
+                  " from '%s' (%s) to '%s' (%s)\n",
+                  filename, line, column, srcstr,
+                  srcty, canonsrcty, dstty, canondstty);
+}
+
 // Handling of encoded types:
 char __ioc_is_signed(uint8_t T) {
   return (T & 8) != 0;

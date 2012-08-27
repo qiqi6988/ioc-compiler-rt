@@ -47,5 +47,10 @@ void __ioc_report_shr_bitwidth(uint32_t line, uint32_t column,
 void __ioc_report_shl_strict(uint32_t line, uint32_t column,
                              const char *filename, const char *expstr,
                              uint64_t lval, uint64_t rval, uint8_t Type);
+void __ioc_report_conversion(uint32_t line, uint32_t column,
+                             const char *filename,
+                             const char *srcty, const char *canonsrcty,
+                             const char *dstty, const char *canondstty,
+                             uint64_t src, uint8_t is_signed);
 
 #endif // _IOC_INTERFACE_H_
