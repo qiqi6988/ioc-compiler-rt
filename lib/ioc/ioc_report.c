@@ -32,21 +32,24 @@ void __ioc_report_add_overflow(uint32_t line, uint32_t column,
                                const char *filename, const char *exprstr,
                                uint64_t lval, uint64_t rval, uint8_t T) {
   __ioc_report_error(line, column, filename, exprstr, lval, T, rval, T,
-                     "signed addition overflow");
+                     __ioc_is_signed(T) ? "signed addition overflow" :
+                                          "unsigned addition overflow");
 }
 
 void __ioc_report_sub_overflow(uint32_t line, uint32_t column,
                                const char *filename, const char *exprstr,
                                uint64_t lval, uint64_t rval, uint8_t T) {
   __ioc_report_error(line, column, filename, exprstr, lval, T, rval, T,
-                     "signed subtraction overflow");
+                     __ioc_is_signed(T) ? "signed subtraction overflow" :
+                                          "unsigned subtraction overflow");
 }
 
 void __ioc_report_mul_overflow(uint32_t line, uint32_t column,
                                const char *filename, const char *exprstr,
                                uint64_t lval, uint64_t rval, uint8_t T) {
   __ioc_report_error(line, column, filename, exprstr, lval, T, rval, T,
-                     "signed multiplication overflow");
+                     __ioc_is_signed(T) ? "signed multiplication overflow" :
+                                          "unsigned multiplication overflow");
 }
 
 void __ioc_report_div_error(uint32_t line, uint32_t column,
